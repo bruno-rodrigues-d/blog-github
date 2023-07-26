@@ -4,7 +4,7 @@
 
 ##
 
-Esse projeto foi desenvolvido com as seguintes tecnologias:
+🚀 Esse projeto foi desenvolvido com as seguintes tecnologias:
 
 - HTML
 - CSS
@@ -16,7 +16,7 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 
 ##
 
-3° desafio do módulo de ReactJS do curso Ignite.
+💻 3° desafio do módulo de ReactJS do curso Ignite.
 
 GitHub Blog - Uma aplicação que utilizará da API do GitHub para buscar issues de um repositório, dados do seu perfil e exibir elas como um blog.
 
@@ -26,7 +26,7 @@ GitHub Blog - Uma aplicação que utilizará da API do GitHub para buscar issues
 
 ##
 
-Figma: https://www.figma.com/community/file/1138814951106121051
+🎨 Figma: https://www.figma.com/community/file/1138814951106121051
 
 ---
 
