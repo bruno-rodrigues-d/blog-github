@@ -11,8 +11,12 @@ export interface BlogProps {
   number: number;
 }
 
+interface BlogTypes {
+  items: BlogProps[];
+}
+
 export function Blog() {
-  const [posts, setPosts] = useState();
+  const [posts, setPosts] = useState<BlogTypes>();
   const [valor, setValor] = useState('');
   
   const handleChange = (event: { target: { value: SetStateAction<string>; }; }) => {
