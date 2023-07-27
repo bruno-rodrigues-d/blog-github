@@ -1,9 +1,8 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { SetStateAction, useEffect, useState } from "react";
 import { Post } from "./components/Post";
 import { Profile } from "./components/Profile";
-import { Search } from "./components/Search";
-import { ListPost } from "./styles";
+import { ListPost, SearchContainer, SearchHeader, SearchInput } from "./styles";
 
 export interface BlogProps {
   title: string;
@@ -14,24 +13,34 @@ export interface BlogProps {
 
 export function Blog() {
   const [posts, setPosts] = useState();
+  const [valor, setValor] = useState('');
+  
+  const handleChange = (event: { target: { value: SetStateAction<string>; }; }) => {
+    setValor(event.target.value);
+  };
 
   async function handleGithubProfileInformation() {
     try {
-      const response = await axios.get(`https://api.github.com/search/issues?q=${''}repo:bruno-rodrigues-d/blog-github`);
+      const response = await axios.get(`https://api.github.com/search/issues?q=${valor ? valor : ''}repo:bruno-rodrigues-d/blog-github`);
 
       setPosts(response.data);
-    } catch (err) {
-      alert('Falha ao encontrar o perfil no GitHub!');
-    }
+    } catch (err) {}
   }
 
   useEffect(() => {
     handleGithubProfileInformation();
-  }, []);
+  }, [valor]);
+console.log(valor)
   return(
     <>
       <Profile />
-      <Search />
+      <SearchContainer>
+        <SearchHeader>
+          <span>Publicações</span>
+          <p>{ String(posts?.items?.length)} publicações</p>
+        </SearchHeader>
+        <SearchInput placeholder="Buscar conteúdo" onChange={handleChange} />
+      </SearchContainer>
       <ListPost>
       {
         posts?.items.map((item: { title: string; body: string; created_at: string; number: string }) => {

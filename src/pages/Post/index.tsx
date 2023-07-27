@@ -24,7 +24,7 @@ export function PostPage() {
   return (
     <>
     <PostPageContainer>
-      <InfoPost post={postInformation} />
+      <InfoPost />
       <PostPageContent>
         <ReactMarkdown>
           {postInformation?.body}
