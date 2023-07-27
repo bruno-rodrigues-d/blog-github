@@ -15,12 +15,13 @@ export const PostContainer = styled.a`
 `
 
 export const PostHeader = styled.header`
+  width: 100%;
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
 
   span {
-    max-width: 17.6875rem;
+    max-width: 15rem;
     color: ${(props) => props.theme['base-title']};
 
     font-family: Nunito;

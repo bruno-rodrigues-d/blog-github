@@ -1,39 +1,74 @@
+import axios from "axios";
 import { ArrowSquareOut, GithubLogo, MapPin, Users } from "phosphor-react";
+import { useEffect, useState } from "react";
 import { ProfileContainer, ProfileInfo, ProfileTitle, ProfileLink, ProfileFooter, ProfileIcons } from "./styles";
 
-interface ProfileProps {
-  information: any
+interface IUserInfo {
+  name: string;
+  followers: number;
+  githubUsername: string;
+  location: string;
+  url: string;
+  imgUrl: string;
+  description: string;
 }
 
-export function Profile({ information }: ProfileProps) {
+export function Profile() {
+  const [profileInformation, setProfileInformation] = useState<IUserInfo>();
+
+  async function handleGithubProfileInformation() {
+    try {
+      const response = await axios.get('https://api.github.com/users/bruno-rodrigues-d');
+      const { name, followers, login, location, html_url, avatar_url, bio } =
+      response.data;
+      const newUserObj = {
+        name,
+        followers,
+        githubUsername: login,
+        location,
+        url: html_url,
+        imgUrl: avatar_url,
+        description: bio,
+      };
+
+      setProfileInformation(newUserObj);
+    } catch (err) {
+      alert('Falha ao encontrar o perfil no GitHub!');
+    }
+  }
+
+  useEffect(() => {
+    handleGithubProfileInformation();
+  }, []);
+
   return(
     <>
       <ProfileContainer>
-        <img src={information.avatar_url} alt="" />
+        <img src={profileInformation?.imgUrl} alt="" />
 
         <ProfileInfo>
           <ProfileTitle>
-            <span>{information.name}</span>
-            <ProfileLink href={information.html_url} target='_blank'>
+            <span>{profileInformation?.name}</span>
+            <ProfileLink href={profileInformation?.url} target='_blank'>
               <span>GITHUB</span>
               <ArrowSquareOut size={16} color="#3294F8" />
             </ProfileLink>
           </ProfileTitle>
           <p>
-            {information.bio}
+            {profileInformation?.description}
           </p>
           <ProfileFooter>
             <ProfileIcons>
               <GithubLogo size={18} color="#3A536B" />
-              <p>{information.login}</p>
+              <p>{profileInformation?.githubUsername}</p>
             </ProfileIcons>
             <ProfileIcons>
               <MapPin size={18} color="#3A536B" />
-              <p>{information.location}</p>
+              <p>{profileInformation?.location}</p>
             </ProfileIcons>
             <ProfileIcons>
               <Users size={18} color="#3A536B" />
-              <p>{information.followers} seguidores</p>
+              <p>{profileInformation?.followers} seguidores</p>
             </ProfileIcons>
           </ProfileFooter>
         </ProfileInfo>

@@ -5,14 +5,21 @@ import { Profile } from "./components/Profile";
 import { Search } from "./components/Search";
 import { ListPost } from "./styles";
 
+export interface BlogProps {
+  title: string;
+  body: string;
+  created_at: string;
+  number: string;
+}
+
 export function Blog() {
-  const [profileInformation, setProfileInformation] = useState([]);
+  const [posts, setPosts] = useState();
 
   async function handleGithubProfileInformation() {
     try {
-      const response = await axios.get('https://api.github.com/users/bruno-rodrigues-d')
+      const response = await axios.get(`https://api.github.com/search/issues?q=${''}repo:bruno-rodrigues-d/blog-github`);
 
-      setProfileInformation(response.data);
+      setPosts(response.data);
     } catch (err) {
       alert('Falha ao encontrar o perfil no GitHub!');
     }
@@ -21,19 +28,19 @@ export function Blog() {
   useEffect(() => {
     handleGithubProfileInformation();
   }, []);
-
   return(
     <>
-      <Profile information={profileInformation} />
+      <Profile />
       <Search />
       <ListPost>
-        <Post />
-        <Post />
-        <Post />
-        <Post />
-        <Post />
+      {
+        posts?.items.map((item: { title: string; body: string; created_at: string; number: string }) => {
+          return (
+            <Post key={`${item.title}-${item.number}`} title={item.title} content={item.body} createdAt={item.created_at} />
+          )
+        })
+      }
       </ListPost>
     </>
-      
   )
 }
