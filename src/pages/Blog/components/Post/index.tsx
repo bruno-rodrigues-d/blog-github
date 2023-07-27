@@ -7,16 +7,17 @@ interface PostProps {
   title: string;
   content: string;
   createdAt: string;
+  number: number;
 }
 
-export function Post({ title, content, createdAt }: PostProps) {
+export function Post({ title, content, createdAt, number }: PostProps) {
   const formattedDate = formatDistanceToNow(new Date(createdAt), {
     locale: ptBR,
     addSuffix: true,
   });
 
   return(
-    <PostContainer href="/post">
+    <PostContainer to={`/post/${number}`}>
       <PostHeader>
         <span>{title}</span>
         <p>{formattedDate}</p>

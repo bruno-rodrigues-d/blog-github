@@ -1,15 +1,22 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
+import { useParams } from "react-router-dom";
 import { InfoPost } from "./components/InfoPost";
 import { PostPageContainer, PostPageContent } from "./styles";
 
+interface PostProps {
+  body: string;
+}
+
 export function PostPage() {
-  const [postInformation, setPostInformation] = useState();
+  const [postInformation, setPostInformation] = useState<PostProps>([] as unknown as PostProps);
+
+  const { id } = useParams();
 
   async function handleGithubPostInformation() {
     try {
-      const response = await axios.get('https://api.github.com/repos/bruno-rodrigues-d/blog-github/issues/1');
+      const response = await axios.get(`https://api.github.com/repos/bruno-rodrigues-d/blog-github/issues/${id}`);
 
 
       setPostInformation(response.data);
@@ -21,6 +28,7 @@ export function PostPage() {
   useEffect(() => {
     handleGithubPostInformation();
   }, []);
+
   return (
     <>
     <PostPageContainer>

@@ -1,6 +1,7 @@
+import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 
-export const PostContainer = styled.a`
+export const PostContainer = styled(NavLink)`
   max-width: 26rem;
   max-height: 16.25rem;
   padding: 2rem;

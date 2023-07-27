@@ -8,7 +8,7 @@ export interface BlogProps {
   title: string;
   body: string;
   created_at: string;
-  number: string;
+  number: number;
 }
 
 export function Blog() {
@@ -30,7 +30,7 @@ export function Blog() {
   useEffect(() => {
     handleGithubProfileInformation();
   }, [valor]);
-console.log(valor)
+
   return(
     <>
       <Profile />
@@ -43,9 +43,15 @@ console.log(valor)
       </SearchContainer>
       <ListPost>
       {
-        posts?.items.map((item: { title: string; body: string; created_at: string; number: string }) => {
+        posts?.items.map((item: BlogProps) => {
           return (
-            <Post key={`${item.title}-${item.number}`} title={item.title} content={item.body} createdAt={item.created_at} />
+            <Post
+              key={`${item.title}-${item.number}`}
+              title={item.title}
+              content={item.body}
+              createdAt={item.created_at}
+              number={item.number}
+            />
           )
         })
       }
